@@ -14,9 +14,15 @@ export const addContact = authActionClient
     await createContactAndCaptureEvent(
       {
         record: parsedInput.record,
-        name: parsedInput.name,
+        salutation: parsedInput.salutation,
+        firstName: parsedInput.firstName,
+        lastName: parsedInput.lastName,
+        companyName: parsedInput.companyName,
         email: parsedInput.email,
-        phone: parsedInput.phone,
+        phone1: parsedInput.phone1,
+        phone2: parsedInput.phone2,
+        address: parsedInput.address,
+        companyRegistrationNumber: parsedInput.companyRegistrationNumber,
         organisation: {
           connect: {
             id: session.user.organisationId

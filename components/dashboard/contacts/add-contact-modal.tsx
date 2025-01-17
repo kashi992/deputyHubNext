@@ -34,6 +34,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RadioCardItem, RadioCards } from '@/components/ui/radio-card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { contactRecordLabel } from '@/constants/labels';
 import { MediaQueries } from '@/constants/media-queries';
 import { useEnhancedModal } from '@/hooks/use-enhanced-modal';
@@ -55,11 +56,20 @@ export const AddContactModal = NiceModal.create<AddContactModalProps>(() => {
     mode: 'onSubmit',
     defaultValues: {
       record: ContactRecord.PERSON,
-      name: '',
+      salutation: '',
+      firstName: '',
+      lastName: '',
+      companyName: '',
       email: '',
-      phone: ''
+      phone1: '',
+      phone2: '',
+      address: '',
+      companyRegistrationNumber: ''
     }
   });
+
+  const recordType = methods.watch('record');
+  
   const title = 'Add contact';
   const description = 'Create a new contact by filling out the form below.';
   const canSubmit =
@@ -113,26 +123,119 @@ export const AddContactModal = NiceModal.create<AddContactModalProps>(() => {
           </FormItem>
         )}
       />
-      <FormField
-        control={methods.control}
-        name="name"
-        render={({ field }) => (
-          <FormItem className="flex w-full flex-col">
-            <FormLabel required>Name</FormLabel>
-            <FormControl>
-              <Input
-                type="text"
-                maxLength={64}
-                required
-                disabled={methods.formState.isSubmitting}
-                {...field}
-              />
-            </FormControl>
-            {(methods.formState.touchedFields.name ||
-              methods.formState.submitCount > 0) && <FormMessage />}
-          </FormItem>
-        )}
-      />
+
+      {recordType === ContactRecord.PERSON ? (
+        <>
+          <FormField
+            control={methods.control}
+            name="salutation"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-col">
+                <FormLabel>Salutation</FormLabel>
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  disabled={methods.formState.isSubmitting}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select salutation" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {salutations.map((salutation) => (
+                      <SelectItem key={salutation} value={salutation}>
+                        {salutation}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={methods.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-col">
+                <FormLabel required>First Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    maxLength={64}
+                    required
+                    disabled={methods.formState.isSubmitting}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={methods.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-col">
+                <FormLabel required>Last Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    maxLength={64}
+                    required
+                    disabled={methods.formState.isSubmitting}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </>
+      ) : (
+        <FormField
+          control={methods.control}
+          name="companyName"
+          render={({ field }) => (
+            <FormItem className="flex w-full flex-col">
+              <FormLabel required>Company Name</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  maxLength={64}
+                  required
+                  disabled={methods.formState.isSubmitting}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )}
+
+      {recordType === ContactRecord.COMPANY && (
+        <FormField
+          control={methods.control}
+          name="companyRegistrationNumber"
+          render={({ field }) => (
+            <FormItem className="flex w-full flex-col">
+              <FormLabel>Company Registration Number</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  maxLength={32}
+                  disabled={methods.formState.isSubmitting}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )}
+
       <FormField
         control={methods.control}
         name="email"
@@ -151,16 +254,17 @@ export const AddContactModal = NiceModal.create<AddContactModalProps>(() => {
           </FormItem>
         )}
       />
+      
       <FormField
         control={methods.control}
-        name="phone"
+        name="phone1"
         render={({ field }) => (
           <FormItem className="flex w-full flex-col">
-            <FormLabel>Phone</FormLabel>
+            <FormLabel>Telephone (1)</FormLabel>
             <FormControl>
               <Input
                 type="tel"
-                maxLength={32}
+                maxLength={16}
                 disabled={methods.formState.isSubmitting}
                 {...field}
               />
@@ -169,6 +273,64 @@ export const AddContactModal = NiceModal.create<AddContactModalProps>(() => {
           </FormItem>
         )}
       />
+
+      <FormField
+        control={methods.control}
+        name="phone2"
+        render={({ field }) => (
+          <FormItem className="flex w-full flex-col">
+            <FormLabel>Telephone (2)</FormLabel>
+            <FormControl>
+              <Input
+                type="tel"
+                maxLength={16}
+                disabled={methods.formState.isSubmitting}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={methods.control}
+        name="address"
+        render={({ field }) => (
+          <FormItem className="flex w-full flex-col">
+            <FormLabel>Address</FormLabel>
+            <FormControl>
+              <Input
+                type="text"
+                disabled={methods.formState.isSubmitting}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      {recordType === ContactRecord.PERSON && (
+        <FormField
+          control={methods.control}
+          name="companyName"
+          render={({ field }) => (
+            <FormItem className="flex w-full flex-col">
+              <FormLabel>Company Name</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  maxLength={64}
+                  disabled={methods.formState.isSubmitting}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )}
     </form>
   );
   const renderButtons = (
@@ -232,6 +394,8 @@ export const AddContactModal = NiceModal.create<AddContactModalProps>(() => {
     </FormProvider>
   );
 });
+
+const salutations = ['Mr', 'Mrs', 'Miss', 'Ms', 'Dr', 'Prof', 'Master'];
 
 const records = [
   {
