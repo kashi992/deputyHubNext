@@ -18,7 +18,6 @@ export const addContactSchema = z.object({
       invalid_type_error: 'First Name must be a string.'
     })
     .trim()
-    .min(1, 'First Name is required.')
     .max(64, 'Maximum 64 characters allowed.')
     .optional(),
   lastName: z
@@ -27,7 +26,6 @@ export const addContactSchema = z.object({
       invalid_type_error: 'Last Name must be a string.'
     })
     .trim()
-    .min(1, 'Last Name is required.')
     .max(64, 'Maximum 64 characters allowed.')
     .optional(),
   companyName: z
@@ -36,7 +34,6 @@ export const addContactSchema = z.object({
       invalid_type_error: 'Company Name must be a string.'
     })
     .trim()
-    .min(1, 'Company Name is required.')
     .max(64, 'Maximum 64 characters allowed.')
     .optional(),
   email: z
@@ -78,6 +75,33 @@ export const addContactSchema = z.object({
     .trim()
     .optional()
     .or(z.literal(''))
+})
+.superRefine((values, ctx) => {
+  if (values.record === ContactRecord.PERSON) {
+    if (!values.firstName || !values.firstName.trim()) {
+      ctx.addIssue({
+        path: ['firstName'],
+        code: 'custom',
+        message: 'First name is required for person contacts',
+      });
+    }
+    if (!values.lastName || !values.lastName.trim()) {
+      ctx.addIssue({
+        path: ['lastName'],
+        code: 'custom',
+        message: 'Last name is required for person contacts',
+      });
+    }
+  }
+  if (values.record === ContactRecord.COMPANY) {
+    if (!values.companyName || !values.companyName.trim()) {
+      ctx.addIssue({
+        path: ['companyName'],
+        code: 'custom',
+        message: 'Company name is required for company contacts',
+      });
+    }
+  }
 });
 
 export type AddContactSchema = z.infer<typeof addContactSchema>;

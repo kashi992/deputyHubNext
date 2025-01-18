@@ -11,35 +11,40 @@ export const addContact = authActionClient
   .metadata({ actionName: 'addContact' })
   .schema(addContactSchema)
   .action(async ({ parsedInput, ctx: { session } }) => {
-    await createContactAndCaptureEvent(
-      {
-        record: parsedInput.record,
-        salutation: parsedInput.salutation,
-        firstName: parsedInput.firstName,
-        lastName: parsedInput.lastName,
-        companyName: parsedInput.companyName,
-        email: parsedInput.email,
-        phone1: parsedInput.phone1,
-        phone2: parsedInput.phone2,
-        address: parsedInput.address,
-        companyRegistrationNumber: parsedInput.companyRegistrationNumber,
-        organisation: {
-          connect: {
-            id: session.user.organisationId
+    try {
+      const newContact = await prisma.contact.create({
+        data: {
+          record: parsedInput.record,
+          salutation: parsedInput.salutation,
+          firstName: parsedInput.firstName,
+          lastName: parsedInput.lastName,
+          companyName: parsedInput.companyName,
+          email: parsedInput.email,
+          phone1: parsedInput.phone1,
+          phone2: parsedInput.phone2,
+          address: parsedInput.address,
+          companyRegistrationNumber: parsedInput.companyRegistrationNumber,
+          organisation: {
+            connect: {
+              id: session.user.organisationId
+            }
           }
         }
-      },
-      session.user.id
-    );
+      });
 
-    revalidateTag(
-      Caching.createOrganisationTag(
-        OrganisationCacheKey.Contacts,
-        session.user.organisationId
-      )
-    );
+      revalidateTag(
+        Caching.createOrganisationTag(
+          OrganisationCacheKey.Contacts,
+          session.user.organisationId
+        )
+      );
 
-    revalidateTag(
-      Caching.createUserTag(UserCacheKey.Pinned, session.user.id)
-    );
+      revalidateTag(
+        Caching.createUserTag(UserCacheKey.Pinned, session.user.id)
+      );
+
+      return {};
+    } catch (e: any) {
+      return { serverError: e.message || 'Unable to create contact' };
+    }
   });

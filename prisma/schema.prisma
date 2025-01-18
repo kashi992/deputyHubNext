@@ -144,11 +144,18 @@ model Contact {
   organisationId String             @db.Uuid
   record         ContactRecord      @default(PERSON)
   image          String?            @db.VarChar(2048)
-  name           String             @db.VarChar(255)
+  name           String?             @db.VarChar(255)
   email          String?            @db.VarChar(255)
   address        String?            @db.VarChar(255)
   phone          String?            @db.VarChar(32)
-  stage          ContactStage       @default(LEAD)
+  stage          ContactStage?       @default(LEAD)
+  salutation     String?
+  firstName      String?
+  lastName       String?
+  companyName    String?
+  phone1         String?
+  phone2         String?
+  companyRegistrationNumber String?
   createdAt      DateTime           @default(now())
   updatedAt      DateTime           @updatedAt
   organisation   Organisation       @relation(fields: [organisationId], references: [id], onDelete: Cascade, onUpdate: Cascade)

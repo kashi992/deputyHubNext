@@ -80,7 +80,9 @@ export const AddContactModal = NiceModal.create<AddContactModalProps>(() => {
       return;
     }
     const result = await addContact(values);
-    if (!result?.serverError && !result?.validationErrors) {
+    if (result?.serverError) {
+      toast.error(`Error: ${result.serverError}`);
+    } else if (!result?.validationErrors) {
       toast.success('Contact added');
       modal.handleClose();
     } else {
