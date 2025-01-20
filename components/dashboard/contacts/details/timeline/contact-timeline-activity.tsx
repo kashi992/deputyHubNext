@@ -117,9 +117,11 @@ type ValueBadgeProps = {
   variant: 'Old' | 'New';
 };
 
+// Update propertyLabelMap to include only specific mappings
 const propertyLabelMap: Record<string, Record<string, string>> = {
   record: contactRecordLabel,
   stage: contactStageLabel
+  // Removed other fields as they don't require specific label mappings
 };
 
 function ValueBadge({
@@ -129,7 +131,12 @@ function ValueBadge({
 }: ValueBadgeProps): React.JSX.Element {
   const text = React.useMemo(() => {
     if (!value) return 'Empty';
-    return propertyLabelMap[property]?.[value] || value;
+    // Check if a specific mapping exists for the property and value
+    if (propertyLabelMap[property]) {
+      return propertyLabelMap[property][value] || value;
+    }
+    // If no specific mapping, return the value directly
+    return value;
   }, [property, value]);
 
   const isEmpty = !value;

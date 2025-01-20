@@ -15,7 +15,15 @@ const fieldsToCheck = [
   'address',
   'phone',
   'stage',
-  'tags'
+  'tags',
+  'salutation',
+  'firstName',
+  'lastName',
+  'companyName',
+  'phone1',
+  'phone2',
+  'companyRegistrationNumber'
+  // Add any additional fields you want to track here
 ] as const;
 
 type FieldToCheck = (typeof fieldsToCheck)[number];
