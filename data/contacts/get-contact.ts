@@ -53,6 +53,26 @@ export async function getContact(input: GetContactSchema): Promise<ContactDto> {
               id: true,
               text: true
             }
+          },
+          salutation: true,
+          firstName: true,
+          lastName: true,
+          companyName: true,
+          phone1: true,
+          phone2: true,
+          companyRegistrationNumber: true,
+          pinned: {
+            select: {
+              id: true,
+              order: true
+            }
+          },
+          tasks: {
+            select: {
+              id: true,
+              title: true,
+              status: true
+            }
           }
         }
       });
@@ -70,7 +90,16 @@ export async function getContact(input: GetContactSchema): Promise<ContactDto> {
         phone: contact.phone ? contact.phone : undefined,
         stage: contact.stage,
         createdAt: contact.createdAt,
-        tags: contact.tags
+        tags: contact.tags,
+        salutation: contact.salutation,
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        companyName: contact.companyName,
+        phone1: contact.phone1,
+        phone2: contact.phone2,
+        companyRegistrationNumber: contact.companyRegistrationNumber,
+        pinned: contact.pinned.map(({ id, order }) => ({ id, order })),
+        tasks: contact.tasks.map(({ id, title, status }) => ({ id, title, status }))
       };
 
       return response;

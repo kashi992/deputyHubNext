@@ -170,7 +170,14 @@ function Properties(contact: ContactDto): React.JSX.Element {
       name: contact.name,
       email: contact.email,
       phone: contact.phone,
-      address: contact.address
+      address: contact.address,
+      salutation: contact.salutation,
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      companyName: contact.companyName,
+      companyRegistrationNumber: contact.companyRegistrationNumber,
+      phone1: contact.phone1,
+      phone2: contact.phone2
     }
   });
   const canSubmit = !methods.formState.isSubmitting;
@@ -281,36 +288,196 @@ function Properties(contact: ContactDto): React.JSX.Element {
             }
             placeholder="No type available"
           />
-          <Property
-            icon={<IdCardIcon className="size-3 shrink-0" />}
-            term="Name"
-            details={
-              editMode ? (
-                <FormField
-                  control={methods.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
-                      <FormControl>
-                        <Input
-                          type="text"
-                          maxLength={70}
-                          required
-                          className="h-7"
-                          disabled={methods.formState.isSubmitting}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              ) : (
-                contact.name
-              )
-            }
-            placeholder="No name available"
-          />
+         
+          {methods.watch('record') === ContactRecord.PERSON && (
+            <>
+              <Property
+                icon={<IdCardIcon className="size-3 shrink-0" />}
+                term="Salutation"
+                details={
+                  editMode ? (
+                    <FormField
+                      control={methods.control}
+                      name="salutation"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormControl>
+                            <Input
+                              type="text"
+                              maxLength={70}
+                              required
+                              className="h-7"
+                              disabled={methods.formState.isSubmitting}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    contact.salutation
+                  )
+                }
+                placeholder="No salutation available"
+              />
+              <Property
+                icon={<IdCardIcon className="size-3 shrink-0" />}
+                term="First Name"
+                details={
+                  editMode ? (
+                    <FormField
+                      control={methods.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormControl>
+                            <Input
+                              type="text"
+                              maxLength={70}
+                              required
+                              className="h-7"
+                              disabled={methods.formState.isSubmitting}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    contact.firstName
+                  )
+                }
+                placeholder="No first name available"
+              />
+              <Property
+                icon={<IdCardIcon className="size-3 shrink-0" />}
+                term="Last Name"
+                details={
+                  editMode ? (
+                    <FormField
+                      control={methods.control}
+                      name="lastName"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormControl>
+                            <Input
+                              type="text"
+                              maxLength={70}
+                              required
+                              className="h-7"
+                              disabled={methods.formState.isSubmitting}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    contact.lastName
+                  )
+                }
+                placeholder="No last name available"
+              />
+               <Property
+                icon={<IdCardIcon className="size-3 shrink-0" />}
+                term="Co. Name"
+                details={
+                  editMode ? (
+                    <FormField
+                      control={methods.control}
+                      name="companyName"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormControl>
+                            <Input
+                              type="text"
+                              maxLength={70}
+                              required
+                              className="h-7"
+                              disabled={methods.formState.isSubmitting}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    contact.companyName
+                  )
+                }
+                placeholder="No company name available"
+              />
+            </>
+          )}
+          {methods.watch('record') === ContactRecord.COMPANY && (
+            <>
+              <Property
+                icon={<IdCardIcon className="size-3 shrink-0" />}
+                term="Co. Name"
+                details={
+                  editMode ? (
+                    <FormField
+                      control={methods.control}
+                      name="companyName"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormControl>
+                            <Input
+                              type="text"
+                              maxLength={70}
+                              required
+                              className="h-7"
+                              disabled={methods.formState.isSubmitting}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    contact.companyName
+                  )
+                }
+                placeholder="No company name available"
+              />
+              <Property
+                icon={<IdCardIcon className="size-3 shrink-0" />}
+                term="Reg. #"
+                details={
+                  editMode ? (
+                    <FormField
+                      control={methods.control}
+                      name="companyRegistrationNumber"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormControl>
+                            <Input
+                              type="text"
+                              maxLength={70}
+                              required
+                              className="h-7"
+                              disabled={methods.formState.isSubmitting}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    contact.companyRegistrationNumber
+                  )
+                }
+                placeholder="No registration number available"
+              />
+            </>
+          )}
+          
           <Property
             icon={<MailIcon className="size-3 shrink-0" />}
             term="Email"
@@ -341,14 +508,15 @@ function Properties(contact: ContactDto): React.JSX.Element {
             }
             placeholder="No email available"
           />
+     
           <Property
             icon={<PhoneIcon className="size-3 shrink-0" />}
-            term="Phone"
+            term="Phone 1"
             details={
               editMode ? (
                 <FormField
                   control={methods.control}
-                  name="phone"
+                  name="phone1"
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormControl>
@@ -366,10 +534,40 @@ function Properties(contact: ContactDto): React.JSX.Element {
                   )}
                 />
               ) : (
-                contact.phone
+                contact.phone1
               )
             }
-            placeholder="No phone available"
+            placeholder="No phone1 available"
+          />
+          <Property
+            icon={<PhoneIcon className="size-3 shrink-0" />}
+            term="Phone 2"
+            details={
+              editMode ? (
+                <FormField
+                  control={methods.control}
+                  name="phone2"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          maxLength={70}
+                          required
+                          className="h-7"
+                          disabled={methods.formState.isSubmitting}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ) : (
+                contact.phone2
+              )
+            }
+            placeholder="No phone2 available"
           />
           <Property
             icon={<LayoutListIcon className="size-3 shrink-0" />}
