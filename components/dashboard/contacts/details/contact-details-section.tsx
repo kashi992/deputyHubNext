@@ -256,7 +256,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                   control={methods.control}
                   name="record"
                   render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
+                    <FormItem className="flex w-full flex-col space-y-1">
                       <FormControl>
                         <Select
                           required
@@ -279,7 +279,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                           </SelectContent>
                         </Select>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -301,7 +301,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                       control={methods.control}
                       name="salutation"
                       render={({ field }) => (
-                        <FormItem className="flex w-full flex-col">
+                        <FormItem className="flex w-full flex-col space-y-1">
                           <FormControl>
                             <Select
                               required
@@ -321,7 +321,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                               </SelectContent>
                             </Select>
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-xs" />
                         </FormItem>
                       )}
                     />
@@ -333,14 +333,14 @@ function Properties(contact: ContactDto): React.JSX.Element {
               />
               <Property
                 icon={<IdCardIcon className="size-3 shrink-0" />}
-                term="First Name"
+                term="First Name *"
                 details={
                   editMode ? (
                     <FormField
                       control={methods.control}
                       name="firstName"
                       render={({ field }) => (
-                        <FormItem className="flex w-full flex-col">
+                        <FormItem className="flex w-full flex-col space-y-1">
                           <FormControl>
                             <Input
                               type="text"
@@ -351,7 +351,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-xs" />
                         </FormItem>
                       )}
                     />
@@ -359,18 +359,18 @@ function Properties(contact: ContactDto): React.JSX.Element {
                     contact.firstName
                   )
                 }
-                placeholder="No first name available"
+                placeholder="First name is required"
               />
               <Property
                 icon={<IdCardIcon className="size-3 shrink-0" />}
-                term="Last Name"
+                term="Last Name *"
                 details={
                   editMode ? (
                     <FormField
                       control={methods.control}
                       name="lastName"
                       render={({ field }) => (
-                        <FormItem className="flex w-full flex-col">
+                        <FormItem className="flex w-full flex-col space-y-1">
                           <FormControl>
                             <Input
                               type="text"
@@ -381,7 +381,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-xs" />
                         </FormItem>
                       )}
                     />
@@ -400,7 +400,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                       control={methods.control}
                       name="companyName"
                       render={({ field }) => (
-                        <FormItem className="flex w-full flex-col">
+                        <FormItem className="flex w-full flex-col space-y-1">
                           <FormControl>
                             <Input
                               type="text"
@@ -411,7 +411,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-xs" />
                         </FormItem>
                       )}
                     />
@@ -427,14 +427,14 @@ function Properties(contact: ContactDto): React.JSX.Element {
             <>
               <Property
                 icon={<IdCardIcon className="size-3 shrink-0" />}
-                term="Co. Name"
+                term="Co. Name *"
                 details={
                   editMode ? (
                     <FormField
                       control={methods.control}
                       name="companyName"
                       render={({ field }) => (
-                        <FormItem className="flex w-full flex-col">
+                        <FormItem className="flex w-full flex-col space-y-1">
                           <FormControl>
                             <Input
                               type="text"
@@ -445,7 +445,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-xs" />
                         </FormItem>
                       )}
                     />
@@ -453,7 +453,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                     contact.companyName
                   )
                 }
-                placeholder="No company name available"
+                placeholder="Company name is required"
               />
               <Property
                 icon={<IdCardIcon className="size-3 shrink-0" />}
@@ -464,7 +464,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                       control={methods.control}
                       name="companyRegistrationNumber"
                       render={({ field }) => (
-                        <FormItem className="flex w-full flex-col">
+                        <FormItem className="flex w-full flex-col space-y-1">
                           <FormControl>
                             <Input
                               type="text"
@@ -475,7 +475,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-xs" />
                         </FormItem>
                       )}
                     />
@@ -497,7 +497,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                   control={methods.control}
                   name="email"
                   render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
+                    <FormItem className="flex w-full flex-col space-y-1">
                       <FormControl>
                         <Input
                           type="email"
@@ -508,7 +508,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -528,7 +528,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                   control={methods.control}
                   name="phone1"
                   render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
+                    <FormItem className="flex w-full flex-col space-y-1">
                       <FormControl>
                         <Input
                           type="tel"
@@ -539,7 +539,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -558,7 +558,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                   control={methods.control}
                   name="phone2"
                   render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
+                    <FormItem className="flex w-full flex-col space-y-1">
                       <FormControl>
                         <Input
                           type="tel"
@@ -569,7 +569,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -588,7 +588,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                   control={methods.control}
                   name="address"
                   render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
+                    <FormItem className="flex w-full flex-col space-y-1">
                       <FormControl>
                         <Input
                           type="text"
@@ -599,7 +599,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -629,12 +629,12 @@ function Property({
   placeholder
 }: PropertyProps): React.JSX.Element {
   return (
-    <div className="flex h-7 flex-row items-center whitespace-nowrap">
-      <dt className="flex h-7 min-w-24 flex-row items-center gap-2 text-muted-foreground">
+    <div className="flex flex-row items-center whitespace-nowrap py-1">
+      <dt className="flex min-w-24 flex-row items-center gap-2 text-muted-foreground">
         {icon}
         {term}
       </dt>
-      <dd className="flex h-7 w-full max-w-[196px] flex-row items-center overflow-hidden text-ellipsis">
+      <dd className="flex w-full max-w-[196px] flex-col">
         {details ? (
           details
         ) : (

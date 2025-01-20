@@ -96,6 +96,34 @@ export const updateContactPropertiesSchema = z.object({
     .max(70, 'Maximum 70 characters allowed.')
     .optional()
     .or(z.literal(''))
+})
+.superRefine((data, ctx) => {
+  if (data.record === ContactRecord.PERSON) {
+    if (!data.firstName?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "First name is required",
+        path: ["firstName"]
+      });
+    }
+    if (!data.lastName?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Last name is required",
+        path: ["lastName"]
+      });
+    }
+  }
+
+  if (data.record === ContactRecord.COMPANY) {
+    if (!data.companyName?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Company name is required",
+        path: ["companyName"]
+      });
+    }
+  }
 });
 
 export type UpdateContactPropertiesSchema = z.infer<
