@@ -30,7 +30,14 @@ export const updateContactProperties = authActionClient
         name: parsedInput.name,
         email: parsedInput.email,
         address: parsedInput.address,
-        phone: parsedInput.phone
+        phone: parsedInput.phone,
+        salutation: parsedInput.salutation,
+        firstName: parsedInput.firstName,  
+        lastName: parsedInput.lastName,
+        companyName: parsedInput.companyName,
+        companyRegistrationNumber: parsedInput.companyRegistrationNumber,
+        phone1: parsedInput.phone1,
+        phone2: parsedInput.phone2
       },
       session.user.id
     );

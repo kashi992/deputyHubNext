@@ -15,14 +15,6 @@ export const updateContactPropertiesSchema = z.object({
     required_error: 'Record is required',
     invalid_type_error: 'Record must be a string'
   }),
-  name: z
-    .string({
-      required_error: 'Name is required.',
-      invalid_type_error: 'Name must be a string.'
-    })
-    .trim()
-    .min(1, 'Name is required.')
-    .max(64, 'Maximum 64 characters allowed.'),
   email: z
     .string({
       invalid_type_error: 'Email must be a string.'
@@ -46,6 +38,62 @@ export const updateContactPropertiesSchema = z.object({
     })
     .trim()
     .max(255, 'Maximum 255 characters allowed.')
+    .optional()
+    .or(z.literal('')),
+  salutation: z
+    .string({
+      invalid_type_error: 'Salutation must be a string.'
+    })
+    .trim()
+    .max(10, 'Maximum 10 characters allowed.')
+    .optional()
+    .or(z.literal('')),
+  firstName: z
+    .string({
+      invalid_type_error: 'First name must be a string.'
+    })
+    .trim()
+    .max(70, 'Maximum 70 characters allowed.')
+    .optional()
+    .or(z.literal('')),
+  lastName: z
+    .string({
+      invalid_type_error: 'Last name must be a string.'
+    })
+    .trim()
+    .max(70, 'Maximum 70 characters allowed.')
+    .optional()
+    .or(z.literal('')),
+  companyName: z
+    .string({
+      invalid_type_error: 'Company name must be a string.'
+    })
+    .trim()
+    .max(70, 'Maximum 70 characters allowed.')
+    .optional()
+    .or(z.literal('')),
+  companyRegistrationNumber: z
+    .string({
+      invalid_type_error: 'Company registration number must be a string.'
+    })
+    .trim()
+    .max(70, 'Maximum 70 characters allowed.')
+    .optional()
+    .or(z.literal('')),
+  phone1: z
+    .string({
+      invalid_type_error: 'Phone1 must be a string.'
+    })
+    .trim()
+    .max(70, 'Maximum 70 characters allowed.')
+    .optional()
+    .or(z.literal('')),
+  phone2: z
+    .string({
+      invalid_type_error: 'Phone2 must be a string.'
+    })
+    .trim()
+    .max(70, 'Maximum 70 characters allowed.')
     .optional()
     .or(z.literal(''))
 });
