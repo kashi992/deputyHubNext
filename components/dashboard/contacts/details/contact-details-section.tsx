@@ -202,6 +202,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
       toast.error("Couldn't update properties");
     }
   };
+  const salutations = ['Mr', 'Mrs', 'Miss', 'Ms', 'Dr', 'Prof', 'Master'];
   return (
     <FormProvider {...methods}>
       <form
@@ -302,14 +303,23 @@ function Properties(contact: ContactDto): React.JSX.Element {
                       render={({ field }) => (
                         <FormItem className="flex w-full flex-col">
                           <FormControl>
-                            <Input
-                              type="text"
-                              maxLength={70}
+                            <Select
                               required
-                              className="h-7"
+                              value={field.value}
+                              onValueChange={field.onChange}
                               disabled={methods.formState.isSubmitting}
-                              {...field}
-                            />
+                            >
+                              <SelectTrigger className="h-7 w-full">
+                                <SelectValue placeholder="Select Salutation" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {salutations.map((salutation) => (
+                                  <SelectItem key={salutation} value={salutation}>
+                                    {salutation}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
