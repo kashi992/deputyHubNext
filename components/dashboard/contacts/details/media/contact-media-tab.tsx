@@ -91,25 +91,29 @@ export function ContactMediaTab({ contact }: ContactMediaTabProps): React.JSX.El
         <Button variant="secondary">Select Files</Button>
       </Card>
 
-      <div className="grid gap-4">
+      <div className="grid gap-4 overflow-y-auto" style={{ maxHeight: '400px' }}>
         {media.map((item) => (
           <Card key={item.id} className="flex items-center justify-between p-4">
-            <div className="flex items-center gap-3">
-              <FileIcon className="h-5 w-5" />
-              <div>
-                <p className="font-medium">{item.fileName}</p>
-                <p className="text-sm text-muted-foreground">
-                  {formatFileSize(item.fileSize)}
-                </p>
-              </div>
-            </div>
-            <a
-              href={item.fileUrl}
-              download={item.fileName}
-              className="text-sm text-primary hover:underline"
-            >
-              Download
-            </a>
+        <div className="flex items-center gap-3">
+          {item.fileType.startsWith('image/') ? (
+            <img src={item.fileUrl} alt={item.fileName} className="h-12 w-12 object-cover" />
+          ) : (
+            <FileIcon className="h-5 w-5" />
+          )}
+          <div>
+            <p className="font-medium">{item.fileName}</p>
+            <p className="text-sm text-muted-foreground">
+          {formatFileSize(item.fileSize)}
+            </p>
+          </div>
+        </div>
+        <a
+          href={item.fileUrl}
+          download={item.fileName}
+          className="text-sm text-primary hover:underline"
+        >
+          Download
+        </a>
           </Card>
         ))}
       </div>
