@@ -48,6 +48,7 @@ export async function getContact(input: GetContactSchema): Promise<ContactDto> {
           phone: true,
           stage: true,
           createdAt: true,
+          archived: true,
           tags: {
             select: {
               id: true,
@@ -90,6 +91,7 @@ export async function getContact(input: GetContactSchema): Promise<ContactDto> {
         phone: contact.phone ? contact.phone : undefined,
         stage: contact.stage,
         createdAt: contact.createdAt,
+        archived: contact.archived,
         tags: contact.tags,
         salutation: contact.salutation,
         firstName: contact.firstName,

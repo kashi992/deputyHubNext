@@ -177,7 +177,8 @@ function Properties(contact: ContactDto): React.JSX.Element {
       companyName: contact.companyName,
       companyRegistrationNumber: contact.companyRegistrationNumber,
       phone1: contact.phone1,
-      phone2: contact.phone2
+      phone2: contact.phone2,
+      archived: contact.archived
     }
   });
   const canSubmit = !methods.formState.isSubmitting;
@@ -211,26 +212,28 @@ function Properties(contact: ContactDto): React.JSX.Element {
       >
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold tracking-tight">Properties</h3>
-          {editMode ? (
+          {contact.archived ? (
+            <span className="text-muted-foreground">Archived</span>
+          ) : editMode ? (
             <div>
               <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="text-success hover:text-success min-w-fit"
-                onClick={handleCancel}
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="text-success hover:text-success min-w-fit"
+          onClick={handleCancel}
               >
-                Cancel
+          Cancel
               </Button>
               <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="text-success hover:text-success min-w-fit"
-                disabled={!canSubmit}
-                onClick={methods.handleSubmit(onSubmit)}
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="text-success hover:text-success min-w-fit"
+          disabled={!canSubmit}
+          onClick={methods.handleSubmit(onSubmit)}
               >
-                Save
+          Save
               </Button>
             </div>
           ) : (
