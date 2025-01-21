@@ -23,6 +23,7 @@ import { useQueryStates } from 'nuqs';
 import { ContactsBulkActions } from '@/components/dashboard/contacts/contacts-bulk-actions';
 import { searchParams } from '@/components/dashboard/contacts/contacts-search-params';
 import { DeleteContactModal } from '@/components/dashboard/contacts/delete-contact-modal';
+import { ArchiveContactModal } from '@/components/dashboard/contacts/archive-contact-modal';
 import { ContactAvatar } from '@/components/dashboard/contacts/details/contact-avatar';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -331,6 +332,11 @@ const columns: ColumnDef<ContactDto>[] = [
       const handleShowDeleteContactModal = (): void => {
         NiceModal.show(DeleteContactModal, { contact: row.original });
       };
+      
+      const handleShowArchiveContactModal = (): void => {
+        NiceModal.show(ArchiveContactModal, { contact: row.original });
+      };
+
       return (
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
@@ -350,6 +356,14 @@ const columns: ColumnDef<ContactDto>[] = [
               <Link href={`${Routes.Contacts}/${row.original.id}`}>View</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                handleShowArchiveContactModal();
+              }}
+            >
+              Archive
+            </DropdownMenuItem>
             <DropdownMenuItem
               className="!text-destructive"
               onClick={(e) => {
