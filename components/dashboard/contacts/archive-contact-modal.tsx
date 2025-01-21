@@ -35,41 +35,46 @@ import type { ContactDto } from '@/types/dtos/contact-dto';
 
 export type ArchiveContactModalProps = NiceModalHocProps & {
   contact: ContactDto;
+  action: 'archive' | 'unarchive';
 };
 
 export const ArchiveContactModal = NiceModal.create<ArchiveContactModalProps>(
-  ({ contact }) => {
+  ({ contact, action }) => {
     const modal = useEnhancedModal();
     const mdUp = useMediaQuery(MediaQueries.MdUp, { ssr: false });
     const methods = useZodForm({
       schema: archiveContactSchema,
       mode: 'all',
       defaultValues: {
-        id: contact.id
+        id: contact.id,
+        action
       }
     });
-    const title = 'Archive this contact?';
-    const canSubmit =
-      !methods.formState.isSubmitting && methods.formState.isValid;
+
+    const isArchive = action === 'archive';
+    const title = `${isArchive ? 'Archive' : 'Unarchive'} this contact?`;
+    const canSubmit = !methods.formState.isSubmitting && methods.formState.isValid;
+
     const onSubmit: SubmitHandler<ArchiveContactSchema> = async (values) => {
-      if (!canSubmit) {
-        return;
-      }
+      if (!canSubmit) return;
+      
       const result = await archiveContact(values);
       if (!result?.serverError && !result?.validationErrors) {
-        toast.success('Contact archived');
+        toast.success(`Contact ${isArchive ? 'archived' : 'unarchived'}`);
         modal.resolve(true);
         modal.handleClose();
       } else {
-        toast.error("Contact couldn't be archived");
+        toast.error(`Contact couldn't be ${isArchive ? 'archived' : 'unarchived'}`);
       }
     };
+
     const renderDescription = (
       <>
-        The contact <strong>{contact.name}</strong> will be archived,
+        The contact <strong>{contact.name}</strong> will be {isArchive ? 'archived' : 'unarchived'},
         are you sure you want to continue?
       </>
     );
+
     const renderForm = (
       <form
         className="hidden"
@@ -82,6 +87,7 @@ export const ArchiveContactModal = NiceModal.create<ArchiveContactModalProps>(
         />
       </form>
     );
+
     const renderButtons = (
       <>
         <Button
@@ -98,10 +104,11 @@ export const ArchiveContactModal = NiceModal.create<ArchiveContactModalProps>(
           loading={methods.formState.isSubmitting}
           onClick={methods.handleSubmit(onSubmit)}
         >
-          Yes, archive
+          Yes, {isArchive ? 'archive' : 'unarchive'}
         </Button>
       </>
     );
+
     return (
       <FormProvider {...methods}>
         {mdUp ? (

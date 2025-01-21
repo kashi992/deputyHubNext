@@ -20,4 +20,5 @@ export type ContactDto = {
   stage: ContactStage;
   createdAt: Date;
   tags: TagDto[];
+  archived: boolean;
 };

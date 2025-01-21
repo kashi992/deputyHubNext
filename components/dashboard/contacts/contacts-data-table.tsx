@@ -229,7 +229,7 @@ const columns: ColumnDef<ContactDto>[] = [
           src={row.original.image}
         />
         <div className="whitespace-nowrap text-sm font-medium">
-          {row.original.name}
+          {row.original.firstName} {row.original.lastName}
         </div>
       </div>
     ),
@@ -265,7 +265,7 @@ const columns: ColumnDef<ContactDto>[] = [
       />
     ),
     cell: ({ row }) => (
-      <span className="whitespace-nowrap text-sm">{row.original.phone}</span>
+      <span className="whitespace-nowrap text-sm">{row.original.phone1}</span>
     ),
     enableSorting: true,
     enableHiding: true
@@ -333,8 +333,11 @@ const columns: ColumnDef<ContactDto>[] = [
         NiceModal.show(DeleteContactModal, { contact: row.original });
       };
       
-      const handleShowArchiveContactModal = (): void => {
-        NiceModal.show(ArchiveContactModal, { contact: row.original });
+      const handleShowArchiveModal = (action: 'archive' | 'unarchive'): void => {
+        NiceModal.show(ArchiveContactModal, { 
+          contact: row.original,
+          action
+        });
       };
 
       return (
@@ -356,14 +359,25 @@ const columns: ColumnDef<ContactDto>[] = [
               <Link href={`${Routes.Contacts}/${row.original.id}`}>View</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={(e) => {
-                e.stopPropagation();
-                handleShowArchiveContactModal();
-              }}
-            >
-              Archive
-            </DropdownMenuItem>
+            {row.original.archived ? (
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleShowArchiveModal('unarchive');
+                }}
+              >
+                Unarchive
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleShowArchiveModal('archive');
+                }}
+              >
+                Archive
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem
               className="!text-destructive"
               onClick={(e) => {

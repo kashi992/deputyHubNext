@@ -25,7 +25,7 @@ export const archiveContact = authActionClient
 
     await prisma.contact.update({
       where: { id: parsedInput.id },
-      data: { archived: true }
+      data: { archived: parsedInput.action === 'archive' }
     });
 
     revalidateTag(
