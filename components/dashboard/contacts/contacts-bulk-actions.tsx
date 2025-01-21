@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 import { toast } from 'sonner';
 
 import { DeleteContactsModal } from '@/components/dashboard/contacts/delete-contacts-modal';
+import { ArchiveContactsModal } from '@/components/dashboard/contacts/archive-contacts-modal';
 import { Button } from '@/components/ui/button';
 import { DataTableBulkActions } from '@/components/ui/data-table';
 import {
@@ -80,6 +81,21 @@ export function ContactsBulkActions({
     }
   };
 
+  const handleShowArchiveContactsModal = () => {
+    const selectedRows = table.getSelectedRowModel().rows;
+    if (selectedRows.length === 0) {
+      return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const isArchived = urlParams.get('archived') === 'true';
+
+    NiceModal.show(ArchiveContactsModal, {
+      contacts: selectedRows.map((row) => row.original),
+      action: isArchived ? 'unarchive' : 'archive'
+    });
+  };
+
   const handleShowDeleteContactsModal = () => {
     const selectedRows = table.getSelectedRowModel().rows;
     if (selectedRows.length === 0) {
@@ -113,6 +129,9 @@ export function ContactsBulkActions({
             Export to Excel
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleShowArchiveContactsModal}>
+            {new URLSearchParams(window.location.search).get('archived') === 'true' ? 'Unarchive' : 'Archive'}
+            </DropdownMenuItem>
           <DropdownMenuItem
             className="!text-destructive"
             onClick={handleShowDeleteContactsModal}
