@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { BuildingIcon, GridIcon, SearchIcon, UserIcon } from 'lucide-react';
+import { ArchiveIcon, BuildingIcon, GridIcon, SearchIcon, UserIcon } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 
 import { searchParams } from '@/components/dashboard/contacts/contacts-search-params';
@@ -69,6 +69,14 @@ export function ContactsFilters({
     })
   );
 
+  const [archived, setArchived] = useQueryState(
+    'archived',
+    searchParams.archived.withOptions({
+      startTransition,
+      shallow: false
+    })
+  );
+
   const handleSearchQueryChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -92,6 +100,13 @@ export function ContactsFilters({
 
   const handleTagsChange = (tags: string[]): void => {
     setSelectedTags(tags);
+    if (pageIndex !== 0) {
+      setPageIndex(0);
+    }
+  };
+
+  const handleArchivedChange = (value: boolean): void => {
+    setArchived(value);
     if (pageIndex !== 0) {
       setPageIndex(0);
     }
@@ -122,7 +137,7 @@ export function ContactsFilters({
               >
                 <div className="flex flex-row items-center gap-2 rounded-md px-2 py-1 hover:bg-accent">
                   {option.icon}
-                  {option.label}
+                  {option.label} {archived && option.archivedLabel}
                 </div>
               </UnderlinedTabsTrigger>
             ))}
@@ -143,12 +158,22 @@ export function ContactsFilters({
               >
                 <div className="flex flex-row items-center gap-2 pr-2">
                   {option.icon}
-                  {option.label}
+                  {option.label} {archived && option.archivedLabel}
                 </div>
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
+        <Button
+          type="button"
+          variant={archived ? "secondary" : "ghost"}
+          size="sm"
+          className="gap-2"
+          onClick={() => handleArchivedChange(!archived)}
+        >
+          <ArchiveIcon className="size-4 shrink-0" />
+          {archived ? "Archived" : "Archive"}
+        </Button>
         <DataTableFilter
           title="Tags"
           options={tags.map((tag) => ({ value: tag.text, label: tag.text }))}
@@ -198,16 +223,19 @@ export function ContactsFilters({
 const recordsOptions = [
   {
     label: 'All',
+    archivedLabel: '(Archived)',
     value: RecordsOption.All,
     icon: <GridIcon className="size-4 shrink-0" />
   },
   {
     label: 'People',
+    archivedLabel: '(Archived)',
     value: RecordsOption.People,
     icon: <UserIcon className="size-4 shrink-0" />
   },
   {
     label: 'Companies',
+    archivedLabel: '(Archived)',
     value: RecordsOption.Companies,
     icon: <BuildingIcon className="size-4 shrink-0" />
   }

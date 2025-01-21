@@ -2,6 +2,7 @@ import {
   createSearchParamsCache,
   createSerializer,
   parseAsArrayOf,
+  parseAsBoolean,
   parseAsInteger,
   parseAsString,
   parseAsStringLiteral
@@ -26,7 +27,8 @@ export const searchParams = {
     SortDirection.Asc
   ),
   searchQuery: parseAsString.withDefault(''),
-  tags: parseAsArrayOf(parseAsString).withDefault([])
+  tags: parseAsArrayOf(parseAsString).withDefault([]),
+  archived: parseAsBoolean.withDefault(false)
 };
 
 export const searchParamsCache = createSearchParamsCache(searchParams);

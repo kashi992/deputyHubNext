@@ -48,10 +48,8 @@ export const getContactsSchema = z.object({
     .max(2000, 'Maximum 2000 characters allowed.')
     .optional()
     .or(literal('')),
-  records: z.nativeEnum(RecordsOption, {
-    required_error: 'Records is required.',
-    invalid_type_error: 'Records must be a string.'
-  }),
+  archived: z.boolean().optional().default(false),
+  records: z.nativeEnum(RecordsOption).optional().default(RecordsOption.All),
   tags: z.array(z.string().max(128, 'Maximum 128 characters allowed.'))
 });
 

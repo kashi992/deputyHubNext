@@ -54,6 +54,7 @@ export async function getContacts(input: GetContactsSchema): Promise<{
           where: {
             organisationId: session.user.organisationId,
             record: mapRecords(parsedInput.records),
+            archived: parsedInput.archived,
             tags:
               parsedInput.tags && parsedInput.tags.length > 0
                 ? { some: { text: { in: parsedInput.tags } } }
@@ -70,6 +71,7 @@ export async function getContacts(input: GetContactsSchema): Promise<{
             phone: true,
             stage: true,
             createdAt: true,
+            archived: true,
             tags: {
               select: {
                 id: true,
@@ -85,6 +87,7 @@ export async function getContacts(input: GetContactsSchema): Promise<{
           where: {
             organisationId: session.user.organisationId,
             record: mapRecords(parsedInput.records),
+            archived: parsedInput.archived,
             tags:
               parsedInput.tags && parsedInput.tags.length > 0
                 ? { some: { text: { in: parsedInput.tags } } }
@@ -94,7 +97,8 @@ export async function getContacts(input: GetContactsSchema): Promise<{
         }),
         prisma.contact.count({
           where: {
-            organisationId: session.user.organisationId
+            organisationId: session.user.organisationId,
+            archived: parsedInput.archived
           }
         })
       ]);
@@ -109,6 +113,7 @@ export async function getContacts(input: GetContactsSchema): Promise<{
         phone: contact.phone ? contact.phone : undefined,
         stage: contact.stage,
         createdAt: contact.createdAt,
+        archived: contact.archived,
         tags: contact.tags
       }));
 
@@ -123,7 +128,8 @@ export async function getContacts(input: GetContactsSchema): Promise<{
       parsedInput.sortDirection,
       parsedInput.tags.join(','),
       parsedInput.records?.toString() ?? '',
-      parsedInput.searchQuery?.toString() ?? ''
+      parsedInput.searchQuery?.toString() ?? '',
+      parsedInput.archived?.toString() ?? 'false' // Add archived to cache key
     ),
     {
       revalidate: defaultRevalidateTimeInSeconds,
