@@ -25,6 +25,7 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { useTransitionContext } from '@/hooks/use-transition-context';
 import { RecordsOption } from '@/schemas/contacts/get-contacts-schema';
 import type { TagDto } from '@/types/dtos/tag-dto';
+import { cn } from '@/lib/utils';
 
 export type ContactsFiltersProps = {
   tags: TagDto[];
@@ -137,7 +138,7 @@ export function ContactsFilters({
               >
                 <div className="flex flex-row items-center gap-2 rounded-md px-2 py-1 hover:bg-accent">
                   {option.icon}
-                  {option.label} {archived && option.archivedLabel}
+                  {option.label}
                 </div>
               </UnderlinedTabsTrigger>
             ))}
@@ -158,22 +159,27 @@ export function ContactsFilters({
               >
                 <div className="flex flex-row items-center gap-2 pr-2">
                   {option.icon}
-                  {option.label} {archived && option.archivedLabel}
+                  {option.label}
                 </div>
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
+
         <Button
           type="button"
           variant={archived ? "secondary" : "ghost"}
           size="sm"
-          className="gap-2"
+          className={cn(
+            "gap-2",
+            archived && "bg-muted text-muted-foreground hover:bg-muted/80"
+          )}
           onClick={() => handleArchivedChange(!archived)}
         >
           <ArchiveIcon className="size-4 shrink-0" />
-          {archived ? "Archived" : "Archive"}
+          Archived
         </Button>
+
         <DataTableFilter
           title="Tags"
           options={tags.map((tag) => ({ value: tag.text, label: tag.text }))}
@@ -223,19 +229,16 @@ export function ContactsFilters({
 const recordsOptions = [
   {
     label: 'All',
-    archivedLabel: '(Archived)',
     value: RecordsOption.All,
     icon: <GridIcon className="size-4 shrink-0" />
   },
   {
     label: 'People',
-    archivedLabel: '(Archived)',
     value: RecordsOption.People,
     icon: <UserIcon className="size-4 shrink-0" />
   },
   {
     label: 'Companies',
-    archivedLabel: '(Archived)',
     value: RecordsOption.Companies,
     icon: <BuildingIcon className="size-4 shrink-0" />
   }
