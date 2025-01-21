@@ -36,3 +36,6 @@ yarn-error.log*
 
 # Content Collections
 .content-collections
+
+# uploads
+public/uploads/

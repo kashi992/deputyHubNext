@@ -4,6 +4,7 @@ import { ActivityIcon, CheckSquare2Icon, FileIcon } from 'lucide-react';
 import { ContactNotesTab } from '@/components/dashboard/contacts/details/notes/contact-notes-tab';
 import { ContactTasksTab } from '@/components/dashboard/contacts/details/tasks/contact-tasks-tab';
 import { ContactActivityTab } from '@/components/dashboard/contacts/details/timeline/contact-activity-tab';
+import { ContactMediaTab } from "@/components/dashboard/contacts/details/media/contact-media-tab";
 import { Separator } from '@/components/ui/separator';
 import {
   UnderlinedTabs,
@@ -16,7 +17,8 @@ import type { ContactDto } from '@/types/dtos/contact-dto';
 enum Tab {
   Activity = 'activity',
   Notes = 'notes',
-  Tasks = 'tasks'
+  Tasks = 'tasks',
+  Media = 'media'
 }
 
 const tabList = [
@@ -34,6 +36,11 @@ const tabList = [
     icon: CheckSquare2Icon,
     label: 'Tasks',
     value: Tab.Tasks
+  },
+  {
+    icon: CheckSquare2Icon,
+    label: 'Media',
+    value: Tab.Media
   }
 ];
 
@@ -86,6 +93,14 @@ export async function ContactTabs({
       >
         <React.Suspense>
           <ContactTasksTab contact={contact} />
+        </React.Suspense>
+      </UnderlinedTabsContent>
+      <UnderlinedTabsContent
+        value={Tab.Media}
+        className="m-0 p-0 md:grow md:overflow-hidden"
+      >
+        <React.Suspense>
+          <ContactMediaTab contact={contact} />
         </React.Suspense>
       </UnderlinedTabsContent>
     </UnderlinedTabs>
