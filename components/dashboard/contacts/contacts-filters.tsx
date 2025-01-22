@@ -190,7 +190,7 @@ export function ContactsFilters({
       <div>
         {smUp ? (
           <InputSearch
-            placeholder="Search by name or email..."
+            placeholder="Search by name, email or phone..."
             className="w-[240px]"
             value={searchQuery}
             onChange={handleSearchQueryChange}
@@ -210,7 +210,7 @@ export function ContactsFilters({
                 <InputSearch
                   autoFocus
                   alwaysShowClearButton
-                  placeholder="Search by name or email..."
+                  placeholder="Search by name, email or phone..."
                   className="h-12 w-full border-none !ring-0"
                   containerClassName="h-12"
                   value={searchQuery}
