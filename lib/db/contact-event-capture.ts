@@ -9,16 +9,14 @@ import { prisma } from '@/lib/db/prisma';
 
 const fieldsToCheck = [
   'record',
-  'image',
-  'name',
-  'email',
-  'address',
-  'phone',
-  'stage',
-  'tags',
   'salutation',
   'firstName',
   'lastName',
+  'email',
+  'image',
+  'address',
+  'stage',
+  'tags',
   'companyName',
   'phone1',
   'phone2',
@@ -50,6 +48,21 @@ function safeStringify<T>(value: T): string | null {
 
 function joinTags(tags: { text: string }[]): string {
   return [...new Set(tags.map((tag) => tag.text))].sort().join(',');
+}
+
+function generateInitialContactChanges(contact: ContactWithTags): ContactChanges {
+  const changes: ContactChanges = {};
+
+  for (const field of fieldsToCheck) {
+    {
+      const oldValue = 'Empty';
+      const newValue = safeStringify(contact[field as keyof Contact]);
+      changes[field] = { old: oldValue, new: newValue };
+
+    }
+  }
+
+  return changes;
 }
 
 export function detectChanges(
@@ -95,10 +108,21 @@ export async function createContactAndCaptureEvent(
         createdAt: createdAt,
         updatedAt: createdAt
       },
-      include: { tags: true }
+      include: {
+        tags: true
+      }
     });
 
-    const changes = detectChanges(null, newContact);
+    console.log('newContact', newContact);
+    
+
+    // Always create activity entry for new contact
+    const changes = generateInitialContactChanges({
+      ...newContact,
+    });
+
+    console.log('changes', changes);
+    
 
     await tx.contactActivity.create({
       data: {

@@ -12,8 +12,8 @@ export const addContact = authActionClient
   .schema(addContactSchema)
   .action(async ({ parsedInput, ctx: { session } }) => {
     try {
-      const newContact = await prisma.contact.create({
-        data: {
+      await createContactAndCaptureEvent(
+        {
           record: parsedInput.record,
           salutation: parsedInput.salutation,
           firstName: parsedInput.firstName,
@@ -29,8 +29,9 @@ export const addContact = authActionClient
               id: session.user.organisationId
             }
           }
-        }
-      });
+        },
+        session.user.id
+      );
 
       revalidateTag(
         Caching.createOrganisationTag(
