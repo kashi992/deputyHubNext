@@ -42,7 +42,11 @@ export async function getContacts(input: GetContactsSchema): Promise<{
       ? { contains: parsedInput.searchQuery, mode: 'insensitive' }
       : undefined;
   const searchVector = searchCriteria
-    ? [{ name: searchCriteria }, { email: searchCriteria }]
+    ? [{ firstName: searchCriteria },
+    { lastName: searchCriteria },
+    { companyName: searchCriteria },
+    { phone1: searchCriteria },
+    { email: searchCriteria }]
     : undefined;
 
   return cache(
@@ -63,6 +67,7 @@ export async function getContacts(input: GetContactsSchema): Promise<{
           },
           select: {
             id: true,
+            organisationId: true,
             record: true,
             image: true,
             name: true,
@@ -70,14 +75,25 @@ export async function getContacts(input: GetContactsSchema): Promise<{
             address: true,
             phone: true,
             stage: true,
+            salutation: true,
+            firstName: true,
+            lastName: true,
+            companyName: true,
+            phone1: true,
+            phone2: true,
+            companyRegistrationNumber: true,
             createdAt: true,
+            updatedAt: true,
             archived: true,
             tags: {
               select: {
                 id: true,
                 text: true
               }
-            }
+            },
+            pinned: true,
+            tasks: true,
+            media: true
           },
           orderBy: {
             [parsedInput.sortBy]: parsedInput.sortDirection
@@ -105,6 +121,7 @@ export async function getContacts(input: GetContactsSchema): Promise<{
 
       const mapped: ContactDto[] = contacts.map((contact) => ({
         id: contact.id,
+        organisationId: contact.organisationId,
         record: contact.record,
         image: contact.image ? contact.image : undefined,
         name: contact.name,
@@ -112,9 +129,20 @@ export async function getContacts(input: GetContactsSchema): Promise<{
         address: contact.address ? contact.address : undefined,
         phone: contact.phone ? contact.phone : undefined,
         stage: contact.stage,
+        salutation: contact.salutation,
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        companyName: contact.companyName,
+        phone1: contact.phone1,
+        phone2: contact.phone2,
+        companyRegistrationNumber: contact.companyRegistrationNumber,
         createdAt: contact.createdAt,
+        updatedAt: contact.updatedAt,
         archived: contact.archived,
-        tags: contact.tags
+        tags: contact.tags,
+        pinned: contact.pinned,
+        tasks: contact.tasks,
+        media: contact.media
       }));
 
       return { contacts: mapped, filteredCount, totalCount };

@@ -50,6 +50,7 @@ import { cn } from '@/lib/utils';
 import { GetContactsSortBy } from '@/schemas/contacts/get-contacts-schema';
 import type { ContactDto } from '@/types/dtos/contact-dto';
 import { SortDirection } from '@/types/sorty-direction';
+import { ContactRecord } from '@prisma/client';
 
 export type ContactsDataTableProps = {
   data: ContactDto[];
@@ -228,9 +229,16 @@ const columns: ColumnDef<ContactDto>[] = [
           record={row.original.record}
           src={row.original.image}
         />
-        <div className="whitespace-nowrap text-sm font-medium">
-          {row.original.firstName} {row.original.lastName}
-        </div>
+        {row.original.record === ContactRecord.COMPANY ?
+          (
+            <div className="whitespace-nowrap text-sm font-medium">
+              {row.original.companyName}
+            </div>
+          ) : (
+            <div className="whitespace-nowrap text-sm font-medium">
+              {row.original.firstName} {row.original.lastName}
+            </div>
+          )}
       </div>
     ),
     enableSorting: true,
@@ -332,9 +340,9 @@ const columns: ColumnDef<ContactDto>[] = [
       const handleShowDeleteContactModal = (): void => {
         NiceModal.show(DeleteContactModal, { contact: row.original });
       };
-      
+
       const handleShowArchiveModal = (action: 'archive' | 'unarchive'): void => {
-        NiceModal.show(ArchiveContactModal, { 
+        NiceModal.show(ArchiveContactModal, {
           contact: row.original,
           action
         });
