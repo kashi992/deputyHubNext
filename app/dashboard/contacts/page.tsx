@@ -26,6 +26,8 @@ import { getContacts } from '@/data/contacts/get-contacts';
 import { TransitionProvider } from '@/hooks/use-transition-context';
 import { createTitle } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
+import { ImportContactsButton } from '@/components/dashboard/contacts/import-contacts-button';
+import { ContactsActionButtons } from '@/components/dashboard/contacts/contacts-action-buttons';
 
 export const metadata: Metadata = {
   title: createTitle('Contacts')
@@ -60,11 +62,11 @@ export default async function ContactsPage({
                 </TooltipContent>
               </Tooltip>
             </div>
-            {hasAnyContacts && (
-              <PageActions>
-                <AddContactButton />
-              </PageActions>
-            )}
+
+            <PageActions>
+              <ContactsActionButtons />
+            </PageActions>
+
           </PagePrimaryBar>
           <PageSecondaryBar>
             <React.Suspense>

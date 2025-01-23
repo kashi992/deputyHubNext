@@ -35,23 +35,33 @@ export function ContactsBulkActions({
       return;
     }
 
-    const response = await fetch(`${getApiUrl()}/export/csv/contact-list`, {
-      method: HttpMethod.Post,
-      headers: {
-        'content-type': MediaTypeNames.Application.Json
-      },
-      body: JSON.stringify({
-        ids: selectedRows.map((row) => row.original.id)
-      })
-    });
-    if (!response.ok) {
-      toast.error("Couldn't export selected contacts to CSV");
-    } else {
+    const loadingToast = toast.loading('Generating CSV file...');
+
+    try {
+      const response = await fetch(`${getApiUrl()}/export/csv/contact-list`, {
+        method: HttpMethod.Post,
+        headers: {
+          'content-type': MediaTypeNames.Application.Json
+        },
+        body: JSON.stringify({
+          ids: selectedRows.map((row) => row.original.id)
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error("Couldn't export selected contacts to CSV");
+      }
+
       const data = await response.blob();
       const disposition = response.headers.get('Content-Disposition') ?? '';
       const filename = extractFilenameFromContentDispositionHeader(disposition);
 
       saveAs(data, filename);
+      toast.success('CSV file downloaded successfully');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Couldn't export selected contacts to CSV");
+    } finally {
+      toast.dismiss(loadingToast);
     }
   };
 
@@ -61,23 +71,33 @@ export function ContactsBulkActions({
       return;
     }
 
-    const response = await fetch(`${getApiUrl()}/export/excel/contact-list`, {
-      method: HttpMethod.Post,
-      headers: {
-        'content-type': MediaTypeNames.Application.Json
-      },
-      body: JSON.stringify({
-        ids: selectedRows.map((row) => row.original.id)
-      })
-    });
-    if (!response.ok) {
-      toast.error("Couldn't export selected contacts to Excel");
-    } else {
+    const loadingToast = toast.loading('Generating Excel file...');
+
+    try {
+      const response = await fetch(`${getApiUrl()}/export/excel/contact-list`, {
+        method: HttpMethod.Post,
+        headers: {
+          'content-type': MediaTypeNames.Application.Json
+        },
+        body: JSON.stringify({
+          ids: selectedRows.map((row) => row.original.id)
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error("Couldn't export selected contacts to Excel");
+      }
+
       const data = await response.blob();
       const disposition = response.headers.get('Content-Disposition') ?? '';
       const filename = extractFilenameFromContentDispositionHeader(disposition);
 
       saveAs(data, filename);
+      toast.success('Excel file downloaded successfully');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Couldn't export selected contacts to Excel");
+    } finally {
+      toast.dismiss(loadingToast);
     }
   };
 

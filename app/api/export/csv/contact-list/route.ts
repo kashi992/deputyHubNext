@@ -9,26 +9,47 @@ import { prisma } from '@/lib/db/prisma';
 import { exportCsvContactListSchema } from '@/schemas/contacts/export-csv-contact-list-schema';
 
 enum ContactColumn {
-  Name = 'name',
+  Record = 'record',
+  Salutation = 'salutation',
+  FirstName = 'firstName',
+  LastName = 'lastName',
+  CompanyName = 'companyName',
   Email = 'email',
-  Phone = 'phone',
+  Phone1 = 'phone1',
+  Phone2 = 'phone2',
   Address = 'address',
+  CompanyRegistrationNumber = 'companyRegistrationNumber',
+  Stage = 'stage',
   Tags = 'tags'
 }
 
 const columns: Partial<Column>[] = [
-  { header: 'Name', key: ContactColumn.Name },
+  { header: 'Record Type', key: ContactColumn.Record },
+  { header: 'Salutation', key: ContactColumn.Salutation },
+  { header: 'First Name', key: ContactColumn.FirstName },
+  { header: 'Last Name', key: ContactColumn.LastName },
+  { header: 'Company Name', key: ContactColumn.CompanyName },
   { header: 'Email', key: ContactColumn.Email },
-  { header: 'Phone', key: ContactColumn.Phone },
+  { header: 'Primary Phone', key: ContactColumn.Phone1 },
+  { header: 'Secondary Phone', key: ContactColumn.Phone2 },
   { header: 'Address', key: ContactColumn.Address },
+  { header: 'Company Registration', key: ContactColumn.CompanyRegistrationNumber },
+  { header: 'Stage', key: ContactColumn.Stage },
   { header: 'Tags', key: ContactColumn.Tags }
 ];
 
 type Row = {
-  [ContactColumn.Name]: string;
+  [ContactColumn.Record]: string;
+  [ContactColumn.Salutation]: string;
+  [ContactColumn.FirstName]: string;
+  [ContactColumn.LastName]: string;
+  [ContactColumn.CompanyName]: string;
   [ContactColumn.Email]: string;
-  [ContactColumn.Phone]: string;
+  [ContactColumn.Phone1]: string;
+  [ContactColumn.Phone2]: string;
   [ContactColumn.Address]: string;
+  [ContactColumn.CompanyRegistrationNumber]: string;
+  [ContactColumn.Stage]: string;
   [ContactColumn.Tags]: string;
 };
 
@@ -63,10 +84,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
           id: parsedBody.ids ? { in: parsedBody.ids } : undefined
         },
         select: {
-          name: true,
+          record: true,
+          salutation: true,
+          firstName: true,
+          lastName: true,
+          companyName: true,
           email: true,
-          phone: true,
+          phone1: true,
+          phone2: true,
           address: true,
+          companyRegistrationNumber: true,
+          stage: true,
           tags: {
             select: {
               text: true
@@ -91,10 +119,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   for (const record of records) {
     const row: Row = {
-      [ContactColumn.Name]: record.name,
+      [ContactColumn.Record]: record.record,
+      [ContactColumn.Salutation]: record.salutation ?? '',
+      [ContactColumn.FirstName]: record.firstName ?? '',
+      [ContactColumn.LastName]: record.lastName ?? '',
+      [ContactColumn.CompanyName]: record.companyName ?? '',
       [ContactColumn.Email]: record.email ?? '',
-      [ContactColumn.Phone]: record.phone ?? '',
+      [ContactColumn.Phone1]: record.phone1 ?? '',
+      [ContactColumn.Phone2]: record.phone2 ?? '',
       [ContactColumn.Address]: record.address ?? '',
+      [ContactColumn.CompanyRegistrationNumber]: record.companyRegistrationNumber ?? '',
+      [ContactColumn.Stage]: record.stage ?? '',
       [ContactColumn.Tags]: record.tags.map((tag) => tag.text).join(',')
     };
     sheet.addRow(row).commit();
