@@ -3,6 +3,7 @@ import { UsersIcon } from 'lucide-react';
 
 import { AddContactButton } from '@/components/dashboard/contacts/add-contact-button';
 import { EmptyState } from '@/components/ui/empty-state';
+import { ContactsActionButtons } from './contacts-action-buttons';
 
 export function ContactsEmptyState(): React.JSX.Element {
   return (
@@ -16,7 +17,7 @@ export function ContactsEmptyState(): React.JSX.Element {
         title="No contact yet"
         description="Add contacts and they will show up here."
       >
-        <AddContactButton />
+        <ContactsActionButtons />
       </EmptyState>
     </div>
   );
