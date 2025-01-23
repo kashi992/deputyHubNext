@@ -31,7 +31,7 @@ export async function getPinned(): Promise<PinnedDto[]> {
           contact: {
             select: {
               id: true,
-              name: true,
+              firstName: true,
               record: true,
               image: true
             }
@@ -46,7 +46,7 @@ export async function getPinned(): Promise<PinnedDto[]> {
         id: pinned.id,
         order: pinned.order,
         contactId: pinned.contact.id,
-        name: pinned.contact.name,
+        name: pinned.contact.firstName ?? '',
         record: pinned.contact.record,
         image: pinned.contact.image ? pinned.contact.image : undefined
       }));

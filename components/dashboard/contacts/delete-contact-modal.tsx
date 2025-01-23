@@ -66,7 +66,7 @@ export const DeleteContactModal = NiceModal.create<DeleteContactModalProps>(
     };
     const renderDescription = (
       <>
-        The contact <strong>{contact.name}</strong> will be permanently deleted,
+        The contact <strong>{contact.firstName}</strong> will be permanently deleted,
         are you sure you want to continue?
       </>
     );

@@ -85,7 +85,7 @@ export async function getContact(input: GetContactSchema): Promise<ContactDto> {
         id: contact.id,
         record: contact.record,
         image: contact.image ? contact.image : undefined,
-        name: contact.name,
+        name: contact.firstName,
         email: contact.email ? contact.email : undefined,
         address: contact.address ? contact.address : undefined,
         phone: contact.phone ? contact.phone : undefined,

@@ -33,7 +33,7 @@ export async function generateMetadata({
     const contact = await getContact({ id: contactId });
     if (contact) {
       return {
-        title: createTitle(contact.name)
+        title: createTitle(contact.firstName ??  'Contact')
       };
     }
   }
@@ -59,7 +59,7 @@ export default async function ContactPage({
         <PagePrimaryBar>
           <div className="flex flex-row items-center gap-4">
             <PageBack href={Routes.Contacts} />
-            <PageTitle>{contact.name}</PageTitle>
+            <PageTitle>{contact.firstName}</PageTitle>
           </div>
           <ContactActions contact={contact} />
         </PagePrimaryBar>

@@ -98,12 +98,19 @@ export async function addExampleData(
                   name: contact.name,
                   image: imageUrl ?? null,
                   record: contact.record,
-                  email: contact.email,
-                  phone: contact.phone,
-                  address: contact.address,
+                  email: contact.email ?? null,
+                  phone: contact.phone ?? null,
+                  address: contact.address ?? null,
                   stage: ContactStage.LEAD,
                   updatedAt: randomDate,
                   createdAt: randomDate,
+                  salutation: null,
+                  firstName: null,
+                  lastName: null,
+                  companyName: null,
+                  description: null,
+                  notes: null,
+                  archived: false,
                   tags: contact.tags.map((tag) => ({
                     text: tag
                   }))

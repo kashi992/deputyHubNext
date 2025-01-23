@@ -59,7 +59,7 @@ function VisitedContactListItem({
           record={contact.record}
           src={contact.image}
         />
-        <span className="text-sm font-normal">{contact.name}</span>
+        <span className="text-sm font-normal">{contact.firstName}</span>
       </div>
       <span className="group-hover:hidden">{contact.pageVisits}</span>
       <ArrowRightIcon className="hidden size-4 shrink-0 group-hover:inline" />

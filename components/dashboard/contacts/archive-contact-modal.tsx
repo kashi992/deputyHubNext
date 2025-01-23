@@ -70,7 +70,7 @@ export const ArchiveContactModal = NiceModal.create<ArchiveContactModalProps>(
 
     const renderDescription = (
       <>
-        The contact <strong>{contact.name}</strong> will be {isArchive ? 'archived' : 'unarchived'},
+        The contact <strong>{contact.firstName}</strong> will be {isArchive ? 'archived' : 'unarchived'},
         are you sure you want to continue?
       </>
     );

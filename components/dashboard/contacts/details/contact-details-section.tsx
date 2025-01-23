@@ -167,7 +167,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
     defaultValues: {
       id: contact.id,
       record: contact.record,
-      name: contact.name,
+      name: contact.firstName,
       email: contact.email,
       phone: contact.phone,
       address: contact.address,

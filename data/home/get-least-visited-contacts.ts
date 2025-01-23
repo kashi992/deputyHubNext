@@ -75,7 +75,7 @@ export async function getLeastVisitedContacts(
 
       const response: VisitedContactDto[] = contacts.map((contact) => ({
         id: contact.id,
-        name: contact.name,
+        name: contact.name ?? '',
         image: contact.image ?? undefined,
         record: contact.record,
         pageVisits: contact._count.pageVisits
