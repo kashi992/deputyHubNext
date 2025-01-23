@@ -27,7 +27,6 @@ export const updateContactProperties = authActionClient
       parsedInput.id,
       {
         record: parsedInput.record,
-        name: parsedInput.name,
         email: parsedInput.email,
         address: parsedInput.address,
         phone: parsedInput.phone,
