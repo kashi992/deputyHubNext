@@ -74,7 +74,7 @@ export const ArchiveContactsModal = NiceModal.create<ArchiveContactsModalProps>(
     const renderDescription = (
       <>
         {isSingleContact ? (
-          <>The contact <strong>{contacts[0].name}</strong></>
+          <>The contact <strong>{contacts[0].firstName}</strong></>
         ) : (
           <><strong>{contacts.length} contacts</strong></>
         )} will be {isArchive ? 'archived' : 'unarchived'}, are you sure you want to continue?

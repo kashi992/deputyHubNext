@@ -1,24 +1,9 @@
-import { type ContactRecord, type ContactStage } from '@prisma/client';
-import type { TagDto } from '@/types/dtos/tag-dto';
+import { type ContactRecord } from '@prisma/client';
 
 export type VisitedContactDto = {
   id: string;
-  record: ContactRecord;
+  firstName: string;
   image?: string;
-  name?: string;
-  salutation?: string;
-  firstName?: string;
-  lastName?: string;
-  companyName?: string;
-  email?: string;
-  phone?: string;
-  phone1?: string;
-  phone2?: string;
-  address?: string;
-  companyRegistrationNumber?: string;
-  stage: ContactStage;
-  createdAt: Date;
-  tags: TagDto[];
-  archived: boolean;
+  record: ContactRecord;
   pageVisits: number;
 };

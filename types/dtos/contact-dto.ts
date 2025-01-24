@@ -6,7 +6,6 @@ export type ContactDto = {
   id: string;
   record: ContactRecord;
   image?: string;
-  name?: string;
   salutation?: string;
   firstName?: string;
   lastName?: string;
@@ -17,7 +16,7 @@ export type ContactDto = {
   phone2?: string;
   address?: string;
   companyRegistrationNumber?: string;
-  stage: ContactStage;
+  stage?: ContactStage;
   createdAt: Date;
   tags: TagDto[];
   archived: boolean;
