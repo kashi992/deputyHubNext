@@ -296,10 +296,10 @@ const columns: ColumnDef<ContactDto>[] = [
         <div
           className={cn(
             'size-2.5 rounded-full border-2 bg-background',
-            contactStageColor[row.original.stage]
+            contactStageColor[row.original.stage ?? 'LEAD']
           )}
         />
-        {contactStageLabel[row.original.stage]}
+        {contactStageLabel[row.original.stage ?? 'LEAD']}
       </div>
     )
   },
