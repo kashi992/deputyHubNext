@@ -3,6 +3,7 @@ import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { useDropzone } from 'react-dropzone';
 import Papa from 'papaparse';
 import { useRouter } from 'next/navigation';
+import { DownloadIcon, UploadCloudIcon } from 'lucide-react';
 
 interface ImportError {
   row: number;
@@ -117,19 +118,52 @@ export const ImportContactsModal = NiceModal.create(() => {
       <DialogContent className="max-w-4xl">
         <DialogHeader>
           <DialogTitle>Import Contacts</DialogTitle>
-          <DialogDescription>
-            {step === 'upload' && "Import your contacts from a CSV file. For person records, first and last names are required. For company records, company name is required."}
-            {step === 'review' && "The following rows couldn't be imported. Please fix the data and try again."}
+          <DialogDescription asChild>
+            <div>
+              {step === 'upload' ? (
+                <>
+                  <div className="mb-2">
+                    Import your contacts from a CSV file. Required fields:
+                  </div>
+                  <ul className="list-disc list-inside text-sm pl-2 space-y-1 mb-2">
+                    <li><span className="font-medium">For PERSON records:</span> Record Type, First Name, Last Name</li>
+                    <li><span className="font-medium">For COMPANY records:</span> Record Type, Company Name</li>
+                  </ul>
+                  <div className="text-sm text-muted-foreground">
+                    Download our sample template below to see the correct format.
+                  </div>
+                </>
+              ) : step === 'review' ? (
+                "The following rows couldn't be imported. Please fix the data and try again."
+              ) : null}
+            </div>
           </DialogDescription>
         </DialogHeader>
 
         {step === 'upload' && (
-          <div
-            {...getRootProps()}
-            className="border-2 border-dashed rounded-md p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
-          >
-            <input {...getInputProps()} />
-            <p>Drag & drop a CSV file here, or click to select one</p>
+          <div className="space-y-4">
+            <div
+              {...getRootProps()}
+              className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
+            >
+              <input {...getInputProps()} />
+              <UploadCloudIcon className="mx-auto h-12 w-12 text-muted-foreground" />
+              <div className="mt-4">
+                <p className="text-sm font-medium">Drag & drop a CSV file here</p>
+                <p className="text-sm text-muted-foreground">or click to select one</p>
+              </div>
+            </div>
+            
+            <div className="flex justify-center">
+              <Button
+                variant="outline"
+                className="gap-2"
+                onClick={() => window.location.href = '/api/import/csv/sample-contacts'}
+              >
+                <DownloadIcon className="h-4 w-4" />
+                Download Sample Template
+              </Button>
+            </div>
           </div>
         )}
 
