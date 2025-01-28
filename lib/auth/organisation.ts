@@ -28,9 +28,7 @@ export async function createUserWithOrganisation(input: {
           password: input.hashedPassword,
           role: Role.ADMIN,
           locale,
-          completedOnboarding: false,
-          // add emailVerified for previous day
-          emailVerified: new Date(Date.now() - 24 * 60 * 60 * 1000)
+          completedOnboarding: false
         }
       }
     },
