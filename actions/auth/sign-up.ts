@@ -40,33 +40,32 @@ export const signUp = actionClient
       locale: 'en-US'
     });
 
-    // try {
-    //   const otp = randomString(3).toUpperCase();
-    //   const hashedOtp = await createHash(`${otp}${process.env.AUTH_SECRET}`);
+    try {
+      const otp = randomString(3).toUpperCase();
+      const hashedOtp = await createHash(`${otp}${process.env.AUTH_SECRET}`);
 
-    //   await prisma.verificationToken.create({
-    //     data: {
-    //       identifier: normalizedEmail,
-    //       token: hashedOtp,
-    //       expires: addHours(new Date(), EMAIL_VERIFICATION_EXPIRY_HOURS)
-    //     },
-    //     select: {
-    //       identifier: true // SELECT NONE
-    //     }
-    //   });
+      await prisma.verificationToken.create({
+        data: {
+          identifier: normalizedEmail,
+          token: hashedOtp,
+          expires: addHours(new Date(), EMAIL_VERIFICATION_EXPIRY_HOURS)
+        },
+        select: {
+          identifier: true // SELECT NONE
+        }
+      });
 
-    //   await sendVerifyEmailAddressEmail({
-    //     recipient: normalizedEmail,
-    //     name: parsedInput.name,
-    //     otp,
-    //     verificationLink: `${getBaseUrl()}${Routes.VerifyEmailRequest}/${hashedOtp}`
-    //   });
-    // } catch (e) {
-    //   console.error(e);
-    // }
+      await sendVerifyEmailAddressEmail({
+        recipient: normalizedEmail,
+        name: parsedInput.name,
+        otp,
+        verificationLink: `${getBaseUrl()}${Routes.VerifyEmailRequest}/${hashedOtp}`
+      });
+    } catch (e) {
+      console.error(e);
+    }
 
     return redirect(
-      // `${Routes.VerifyEmail}?email=${encodeURIComponent(parsedInput.email)}`
-      Routes.Home
+      `${Routes.VerifyEmail}?email=${encodeURIComponent(parsedInput.email)}`
     );
   });
