@@ -44,7 +44,7 @@ export async function getMostVisitedContacts(
             where: { organisationId: session.user.organisationId },
             select: {
               id: true,
-              name: true,
+              firstName: true,
               image: true,
               record: true,
               _count: {
@@ -75,7 +75,7 @@ export async function getMostVisitedContacts(
 
       const response: VisitedContactDto[] = contacts.map((contact) => ({
         id: contact.id,
-        name: contact.firstName,
+        firstName: contact.firstName ?? '',
         image: contact.image ?? undefined,
         record: contact.record,
         pageVisits: contact._count.pageVisits
