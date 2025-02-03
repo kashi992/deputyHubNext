@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { authActionClient } from '@/actions/safe-action';
 import { Routes } from '@/constants/routes';
 import { Caching, OrganisationCacheKey, UserCacheKey } from '@/data/caching';
-import { addExampleData } from '@/lib/db/example-data';
+// import { addExampleData } from '@/lib/db/example-data';
 import { prisma } from '@/lib/db/prisma';
 import { decodeBase64Image } from '@/lib/imaging/decode-base64-image';
 import { resizeImage } from '@/lib/imaging/resize-image';
@@ -112,7 +112,7 @@ export const completeOnboarding = authActionClient
     await prisma.$transaction(transactions);
 
     try {
-      await addExampleData(session.user.organisationId, session.user.id);
+      // await addExampleData(session.user.organisationId, session.user.id);
     } catch (e) {
       console.error(e);
     }

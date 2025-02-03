@@ -110,8 +110,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   const now = new Date();
   const workbook = new Workbook();
-  workbook.creator = session.user.name;
-  workbook.lastModifiedBy = session.user.name;
+  workbook.creator = 'DeputyHub';
+  workbook.lastModifiedBy = 'DeputyHub';
   workbook.created = now;
   workbook.modified = now;
   const sheet = workbook.addWorksheet('Contact List');

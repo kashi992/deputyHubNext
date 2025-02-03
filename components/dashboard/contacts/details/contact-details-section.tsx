@@ -176,8 +176,7 @@ function Properties(contact: ContactDto): React.JSX.Element {
       companyName: contact.companyName,
       companyRegistrationNumber: contact.companyRegistrationNumber,
       phone1: contact.phone1,
-      phone2: contact.phone2,
-      archived: contact.archived
+      phone2: contact.phone2
     }
   });
   const canSubmit = !methods.formState.isSubmitting;
